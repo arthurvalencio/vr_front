@@ -1,0 +1,76 @@
+<div class="main-title">
+    <div class="container">
+        <div class="row">
+            <div class="col-1">
+                <a href="/produto/cadastro" class="new-product fw-bold"><i class="fa-solid fa-circle-plus"></i></a>
+            </div>
+            <div class="col-11">
+                <div class="text-center fs-2 fw-bold">
+                    Consulta de Produto
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main-content">
+    <div class="container">
+        <form action="" class="filtros" id="filtros">
+            <div class="row">
+                <div class="col-2">
+                    <label for="codigo">Código</label>
+                    <input type="text" id="codigo" name="codigo" (input)="getProdutos()" [(ngModel)]="filter.codigo">
+                </div>
+                <div class="col-3">
+                    <label for="descricao">Descrição</label>
+                    <input type="text" id="descricao" name="descricao" (input)="getProdutos()" [(ngModel)]="filter.descricao">
+                </div>
+                <div class="col-2">
+                    <label for="custo">Custo</label>
+                    <input type="text" id="custo" name="custo" (input)="getProdutos()" [(ngModel)]="filter.custo">
+                </div>
+                <div class="col-2">
+                    <label for="preco">Preço de Venda</label>
+                    <input type="text" id="preco" name="preco" (input)="getProdutos()" [(ngModel)]="filter.preco">
+                </div>
+            </div>
+        </form>
+        <table class="table table-bordered table-hover text-center">
+            <thead>
+                <tr>
+                    <th scope="col">Código</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Custo (R$)</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead> 
+            <tbody>
+                <tr *ngFor="let produto of produtos">
+                    <th scope="col">{{produto.id}}</th>
+                    <th scope="col">{{produto.descricao}}</th>
+                    <th scope="col">{{produto.custo}}</th>
+                    <th scope="col" class="table-actions">
+                        <button type="button" (click)="openModal(template, produto.id)"><i class="fa-solid fa-trash"></i></button>
+                        <a href="/produto/cadastro/{{produto.id}}"><i class="fa-solid fa-pencil"></i></a>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<ng-template #template>
+    <div class="modal-header justify-content-between">
+        <h4 class="modal-title pull-left">Modal</h4>
+        <button type="button" class="close pull-right" 
+                aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <p>Tem certeza que deseja excluir esse dado?</p>
+        <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Cancelar</button>
+            <button type="button" class="btn btn-danger" (click)="removeProduct()">Excluir</button>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,49 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+.main-title {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.main-title .col-1 {
+    align-content: center;
+}
+
+.main-title button {
+    color: black;
+    background: none;
+    border: none;
+}
+
+.new-product, .table-actions a {
+    text-decoration: none;
+    color: black;
+}
+
+.filtros,
+.produto-form {
+    margin: 20px 0;
+}
+
+.filtros input,
+.produto-form input[type="text"] {
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.table-actions button{
+    background: none;
+    border: none;
+    margin-right: 5px;
+}
+
+.modal-header button {
+    float: right;
+    background: none;
+    border: none;
+}
+
+input:disabled {
+    cursor: not-allowed;
+}

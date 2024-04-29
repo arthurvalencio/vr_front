@@ -1,0 +1,129 @@
+<div class="main-title">
+    <div class="container">
+        <div class="row">
+            <div class="col-1">
+                <button type="button" (click)="salvarProduto()"><i class="fa-solid fa-floppy-disk"></i></button>
+                <button type="button" (click)="openModal(template)" *ngIf="id"><i class="fa-solid fa-trash"></i></button>
+            </div>
+            <div class="col-11">
+                <div class="text-center fs-2 fw-bold">
+                    Cadastro de Produto
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main-content">
+    <div class="container">
+        <form class="produto-form" id="produto-form">
+            <div class="row">
+                <div class="col-9">
+                    <div class="row mb-4">
+                        <div class="col-2">
+                            <label for="codigo">Código*</label>
+                            <input type="text" id="codigo" name="codigo" disabled [(ngModel)]="produto.id">
+                        </div>
+                        <div class="col-3">
+                            <label for="descricao">Descrição*</label>
+                            <input type="text" id="descricao" name="descricao" [(ngModel)]="produto.descricao">
+                        </div>
+                        <div class="col-2">
+                            <label for="custo">Custo</label>
+                            <input type="text" id="custo" name="custo" [(ngModel)]="produto.custo">
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-hover text-center">
+                        <thead>
+                            <button type="button" (click)="openModalEditNovo(edit)" class="button-table"><i class="fa-solid fa-plus"></i></button>
+                            <tr>
+                                <th scope="col">Loja</th>
+                                <th scope="col">Preço de Venda (R$)</th>
+                                <th scope="col">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let produtoLoja of produto.lojas; let i = index">
+                                <input type="hidden" name="idLoja" [(ngModel)]="produtoLoja.idLoja">
+                                <input type="hidden" name="precoVenda" [(ngModel)]="produtoLoja.precoVenda">
+                                <th scope="col">{{produtoLoja.descricao}}</th>
+                                <th scope="col">{{produtoLoja.precoVenda}}</th>
+                                <th scope="col" class="table-actions">
+                                    <button type="button" (click)="openModalRemoverItem(itemProdutoLoja, produtoLoja.idLoja)"><i class="fa-solid fa-trash"></i></button>
+                                    <button type="button" (click)="openModalEdit(edit, produtoLoja.idLoja, produtoLoja.precoVenda)"><i class="fa-solid fa-pencil"></i></button>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-3">
+                    <label for="image">Imagem:</label>
+                    <input type="file" id="image" accept="image/*" (change)="previewImage($event)" [(ngModel)]="produto.imagem">
+                    <div id="image-container">
+                        <img id="uploaded-image" [src]="imageUrl" alt="Imagem carregada">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<ng-template #template>
+    <div class="modal-header justify-content-between">
+        <h4 class="modal-title pull-left">Modal</h4>
+        <button type="button" class="close pull-right" 
+                aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <p>Tem certeza que deseja excluir esse dado?</p>
+        <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Cancelar</button>
+            <button type="button" class="btn btn-danger" (click)="removeProduct()">Excluir</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #itemProdutoLoja>
+    <div class="modal-header justify-content-between">
+        <h4 class="modal-title pull-left">Modal</h4>
+        <button type="button" class="close pull-right" 
+                aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <p>Tem certeza que deseja excluir esse dado?</p>
+        <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Cancelar</button>
+            <button type="button" class="btn btn-danger" (click)="removeItemProdutoLoja()">Excluir</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #edit>
+    <div class="modal-header justify-content-between">
+        <button type="button" (click)="salvarPrecoVenda()"><i class="fa-solid fa-floppy-disk"></i></button>
+        <h4 class="modal-title pull-left">Alteração/Inclusão de Preço</h4>
+        <button type="button" class="close pull-right" 
+                aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <form class="lojas" id="lojas">
+            <div class="row">
+                <div class="col-6">
+                    <label for="codLoja">Loja</label>
+                    <select name="loja" id="loja" [(ngModel)]="modalLojaId">
+                        <option *ngFor="let loja of lojas" value="{{loja.id}}">{{loja.descricao}}</option>
+                    </select>
+                </div>
+                <div class="col-6">
+                    <label for="precoVenda">Preço de Venda (R$)*</label>
+                    <input type="text" id="precoVenda" name="precoVenda" [(ngModel)]="modalPreco">
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-template>
